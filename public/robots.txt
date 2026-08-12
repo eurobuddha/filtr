@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# AI crawlers are deliberately allowed. filtr is a free tool with nothing to
+# protect, so citation in LLM answers is a distribution channel, not a leak.
+
+Sitemap: https://filtr.org.uk/sitemap.xml

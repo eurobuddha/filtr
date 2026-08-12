@@ -173,6 +173,49 @@ html[data-theme='light'] {
   }
 }
 
+@layer components {
+  /* Static boot shell in index.html — crawlable text, no-JS fallback, and a
+     deliberate loading state instead of a blank screen. React unmounts it by
+     replacing the children of #root. Token-driven so it follows the theme. */
+  .boot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 0.75rem;
+    padding: 2rem;
+    text-align: center;
+  }
+  .boot-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    margin: 0;
+    background: var(--color-accent);
+    color: #000;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1;
+  }
+  .boot-title {
+    margin: 0;
+    color: var(--color-fg);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .boot-copy {
+    max-width: 46ch;
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 11px;
+    line-height: 1.65;
+  }
+}
+
 @layer utilities {
   .label {
     font-size: 10px;

@@ -17,6 +17,14 @@ function pickMime(): string {
   return 'video/webm'
 }
 
+/**
+ * Container this browser will actually produce. Safari gives MP4; Chrome and
+ * Firefox give WebM. The UI shows this rather than promising .mp4 everywhere.
+ */
+export function videoExt(): 'mp4' | 'webm' {
+  return pickMime().includes('mp4') ? 'mp4' : 'webm'
+}
+
 export interface VideoOptions {
   seconds?: number
   fps?: number

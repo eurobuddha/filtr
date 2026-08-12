@@ -52,7 +52,9 @@ export const BUILTIN_PRESETS: Preset[] = [
     settings: {
       active: 'dithering',
       dithering: { method: 'bayer4x4', colorMode: 'indexed', palette: 'gameboy' },
-      output: { background: '#0f380f', showOriginal: false, maxPreviewDim: 1024 },
+      // No maxPreviewDim override — it caps exports too, so pinning it here
+      // quietly quartered the output resolution for anyone using this preset.
+      output: { background: '#0f380f', showOriginal: false },
     },
   },
   {

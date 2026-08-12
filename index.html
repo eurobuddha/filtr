@@ -31,7 +31,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="filtr" />
     <meta property="og:url" content="https://filtr.org.uk/" />
-    <meta property="og:title" content="filtr" />
+    <meta property="og:title" content="filtr — free retro photo &amp; video effects studio" />
     <meta
       property="og:description"
       content="Free WebGL2-powered ASCII, dithering and retro effects, in real time."
@@ -43,7 +43,7 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="filtr" />
+    <meta name="twitter:title" content="filtr — free retro photo &amp; video effects studio" />
     <meta
       name="twitter:description"
       content="Free WebGL2-powered ASCII, dithering and retro effects, in real time."
@@ -51,10 +51,69 @@
     <meta name="twitter:image" content="https://filtr.org.uk/preview.png" />
     <meta name="twitter:image:alt" content="filtr — ASCII, dithering, halftone and retro effects" />
 
-    <title>filtr — retro image &amp; video effects</title>
+    <title>filtr — free retro photo &amp; video effects studio</title>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://filtr.org.uk/#website",
+            "url": "https://filtr.org.uk/",
+            "name": "filtr",
+            "inLanguage": "en-GB"
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://filtr.org.uk/#app",
+            "name": "filtr",
+            "url": "https://filtr.org.uk/",
+            "applicationCategory": "MultimediaApplication",
+            "operatingSystem": "Any (web browser)",
+            "browserRequirements": "Requires WebGL2",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+            "description": "Free browser-based studio for ASCII art, dithering, halftone, pixel sorting and CRT/VHS effects on images, video, GIFs and webcam. Runs entirely on your device.",
+            "featureList": [
+              "ASCII art generator",
+              "Dithering (Floyd-Steinberg, Atkinson, Bayer, blue-noise)",
+              "Halftone",
+              "Pixel sorting",
+              "Edge detection",
+              "CRT, VHS and scanline effects",
+              "Export to PNG, JPG, GIF, video, SVG and text"
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Static shell: real text for crawlers, a no-JS fallback, and something
+         intentional to look at while the bundle parses. React replaces the
+         children of #root on mount, so this must live INSIDE it. -->
+    <div id="root">
+      <div class="boot">
+        <p class="boot-mark">f</p>
+        <p class="boot-title">filtr</p>
+        <p class="boot-copy">
+          A free, real-time retro effects studio for images, video, GIFs and your
+          webcam. Turn a photo into ASCII art, a dithered print, a halftone or a
+          CRT/VHS screen grab — then export it as PNG, JPG, animated GIF, video,
+          SVG or plain text. Fifteen effects with composable bloom, grain,
+          scanlines and chromatic aberration, plus retro palettes from Game Boy
+          to Risograph. Everything runs on your device with WebGL2; your images
+          are never uploaded.
+        </p>
+        <noscript>
+          <p class="boot-copy">
+            filtr needs JavaScript and WebGL2 to run. Please enable JavaScript,
+            or open the site in a recent version of Chrome, Edge, Firefox or Safari.
+          </p>
+        </noscript>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

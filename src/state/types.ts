@@ -289,7 +289,15 @@ export interface PostParams {
 export interface OutputParams {
   background: string
   showOriginal: boolean
-  /** quality cap for the live preview; export always uses native resolution */
+  /**
+   * Longest-edge cap for the render buffer, in pixels. Governs the preview AND
+   * every export — they share one canvas (see Renderer.computeSize).
+   *
+   * It deliberately is not decoupled: grid effects size their cells in absolute
+   * canvas pixels (ASCII `scale * 4`, halftone/dots `spacing`, voronoi
+   * `cellSize`), so rendering an export at a different resolution would change
+   * the character/dot count and the file would not match the preview.
+   */
   maxPreviewDim: number
 }
 

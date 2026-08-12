@@ -7,9 +7,10 @@ with WebGL2, entirely in the browser. Nothing is uploaded.
 ## Features
 
 - **Render styles:** ASCII (custom charsets), dithering (Floyd–Steinberg, Atkinson,
-  Burkes, Stucki, Sierra, Bayer 2/4/8, blue-noise, interleaved gradient), halftone
-  (circle/square/diamond/line, square & hex grids), edge detection (Sobel, Prewitt,
-  Laplacian, crosshatch, contour), pixel sort, matrix rain, wave lines, Voronoi mosaic.
+  Burkes, Stucki, Sierra, Bayer 2/4/8/16, clustered-dot, blue-noise, interleaved
+  gradient), halftone (circle/square/diamond/line), dots (square & hex grids),
+  edge detection (Sobel, Prewitt, Laplacian, crosshatch, contour), pixel sort,
+  matrix rain, wave lines, Voronoi mosaic.
 - **Inputs:** image · video · animated GIF · webcam.
 - **Colour:** brightness/contrast/saturation/hue/gamma/posterize/invert, plus retro
   palettes (Amber, Phosphor, GameBoy, Risograph, Cyberpunk, Sepia, Newsprint, custom…).

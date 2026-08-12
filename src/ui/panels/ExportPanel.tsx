@@ -5,16 +5,19 @@ import { useRenderer } from '../RendererProvider'
 import { useStore } from '@/state/store'
 import { exportStill } from '@/export/still'
 import { exportGif } from '@/export/gif'
-import { recordVideo, videoSupported } from '@/export/video'
+import { recordVideo, videoExt, videoSupported } from '@/export/video'
 import { exportSvg, svgSupported } from '@/export/svg'
 import { copyAsciiText, exportAsciiText } from '@/export/text'
+
+/** Longest-edge options for GIF, in px. Larger means a much bigger file. */
+const GIF_DIMS = [480, 720, 1080, 1440]
 
 type Fmt = 'png' | 'jpg' | 'gif' | 'video' | 'svg' | 'txt'
 const FORMATS: { id: Fmt; label: string; ext: string }[] = [
   { id: 'png', label: 'PNG', ext: '.png' },
   { id: 'jpg', label: 'JPG', ext: '.jpg' },
   { id: 'gif', label: 'GIF', ext: '.gif' },
-  { id: 'video', label: 'Video', ext: '.mp4' },
+  { id: 'video', label: 'Video', ext: `.${videoExt()}` },
   { id: 'svg', label: 'SVG', ext: '.svg' },
   { id: 'txt', label: 'Text', ext: '.txt' },
 ]
@@ -26,6 +29,8 @@ export function ExportPanel() {
   const [fmt, setFmt] = useState<Fmt>('png')
   const [seconds, setSeconds] = useState(3)
   const [fps, setFps] = useState(12)
+  // Was hardcoded to 480 and never passed through, so every GIF came out soft.
+  const [gifDim, setGifDim] = useState(720)
   const [busy, setBusy] = useState(false)
   const [progress, setProgress] = useState(0)
   const [copied, setCopied] = useState(false)
@@ -42,7 +47,7 @@ export function ExportPanel() {
     try {
       if (fmt === 'png') await exportStill(r, 'png')
       else if (fmt === 'jpg') await exportStill(r, 'jpeg')
-      else if (fmt === 'gif') await exportGif(r, { seconds, fps, onProgress: setProgress })
+      else if (fmt === 'gif') await exportGif(r, { seconds, fps, maxDim: gifDim, onProgress: setProgress })
       else if (fmt === 'video') await recordVideo(r, { seconds, onProgress: setProgress })
       else if (fmt === 'svg') exportSvg(r)
       else if (fmt === 'txt') exportAsciiText(r)
@@ -81,11 +86,28 @@ export function ExportPanel() {
             <span className="w-9 text-right tabular-nums text-fg-dim">{seconds}s</span>
           </label>
           {fmt === 'gif' && (
-            <label className="flex h-6 items-center gap-2">
-              <span className="label w-[84px]">FPS</span>
-              <input type="range" className="filtr-range flex-1" min={5} max={24} step={1} value={fps} onChange={(e) => setFps(+e.target.value)} />
-              <span className="w-9 text-right tabular-nums text-fg-dim">{fps}</span>
-            </label>
+            <>
+              <label className="flex h-6 items-center gap-2">
+                <span className="label w-[84px]">FPS</span>
+                <input type="range" className="filtr-range flex-1" min={5} max={24} step={1} value={fps} onChange={(e) => setFps(+e.target.value)} />
+                <span className="w-9 text-right tabular-nums text-fg-dim">{fps}</span>
+              </label>
+              <div className="flex h-6 items-center gap-2">
+                <span className="label w-[84px]">Size</span>
+                <div className="grid flex-1 grid-cols-4 gap-px bg-border">
+                  {GIF_DIMS.map((d) => (
+                    <button
+                      key={d}
+                      type="button"
+                      onClick={() => setGifDim(d)}
+                      className={`py-1 text-[10px] tabular-nums transition-colors ${gifDim === d ? 'bg-accent text-black' : 'bg-surface text-fg-dim hover:bg-surface-2 hover:text-fg'}`}
+                    >
+                      {d}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </>
           )}
         </div>
       )}

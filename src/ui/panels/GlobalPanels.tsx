@@ -94,12 +94,38 @@ export function PostPanel() {
   )
 }
 
+/**
+ * Shows the real pixel size everything renders and exports at. The Resolution
+ * cap silently degraded exports before this existed — a user lowering it for a
+ * smoother preview had no way to see what they were actually saving.
+ */
+function OutputSize() {
+  const source = useStore((s) => s.source)
+  const cap = useStore((s) => s.settings.output.maxPreviewDim)
+  if (source.kind === 'none') return null
+  const longest = Math.max(source.width, source.height)
+  const k = longest > cap ? cap / longest : 1
+  const w = Math.max(1, Math.round(source.width * k))
+  const h = Math.max(1, Math.round(source.height * k))
+  return (
+    <div className="flex h-6 items-center justify-between">
+      <span className="label">Output</span>
+      <span className="tabular-nums text-[11px] text-fg-dim">
+        {w}×{h}
+        {k < 1 && <span className="text-faint"> · capped</span>}
+      </span>
+    </div>
+  )
+}
+
 export function OutputPanel() {
   return (
     <Panel title="Output" defaultOpen={false}>
       <ColorInput path="output.background" label="Background" />
       <Toggle path="output.showOriginal" label="Show Original" />
-      <Slider path="output.maxPreviewDim" label="Max Res" min={512} max={4096} step={128} />
+      {/* Caps the render buffer for preview AND export — they share one canvas. */}
+      <Slider path="output.maxPreviewDim" label="Resolution" min={512} max={4096} step={128} />
+      <OutputSize />
     </Panel>
   )
 }

@@ -8,7 +8,12 @@ export function LeftRail() {
     <div className="flex h-full flex-col overflow-y-auto">
       <div className="flex h-8 shrink-0 items-center gap-2 border-b border-border px-3">
         <span className="flex h-4 w-4 items-center justify-center bg-accent text-[11px] font-bold leading-none text-black">f</span>
-        <span className="text-[13px] font-semibold tracking-tight text-fg">filtr</span>
+        {/* The app's only h1. sr-only continuation gives crawlers and screen
+            readers the full title without changing the visual wordmark. */}
+        <h1 className="text-[13px] font-semibold tracking-tight text-fg">
+          filtr
+          <span className="sr-only"> — ASCII, dithering and halftone effects studio</span>
+        </h1>
       </div>
       <InputPanel />
       <Panel title="Effects">
