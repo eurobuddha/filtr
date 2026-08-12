@@ -1,0 +1,130 @@
+@import 'tailwindcss';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+@import '@fontsource/ibm-plex-mono/600.css';
+
+/* ───────────────────────── filtr — terminal instrument theme ─────────────
+   Dense monospace UI, near-black flat surfaces, hairline borders, one sharp
+   signal-green accent. No rounded cards, no soft shadows. */
+@theme {
+  --color-bg: #0a0a0a;
+  --color-surface: #0d0d0d;
+  --color-surface-2: #131313;
+  --color-surface-3: #1a1a1a;
+  --color-border: #1d1d1d;
+  --color-border-2: #2a2a2a;
+  --color-fg: #e4e4e4;
+  --color-fg-dim: #a8a8a8;
+  --color-muted: #6c6c6c;
+  --color-faint: #444444;
+
+  --color-accent: #c6f24e;
+  --color-accent-dim: #7e9a2e;
+  --color-accent-2: #4ee0f2;
+  --color-bad: #f2594e;
+
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-sans: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border-2) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: var(--color-border-2);
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::selection {
+    background: var(--color-accent);
+    color: #000;
+  }
+  select {
+    background-image: none;
+  }
+}
+
+@layer components {
+  /* thin terminal slider */
+  .filtr-range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2px;
+    background: var(--color-border-2);
+    outline: none;
+    cursor: pointer;
+  }
+  .filtr-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 9px;
+    height: 9px;
+    background: var(--color-fg);
+    border-radius: 0; /* square handles — edgy */
+    transition: background 0.1s;
+  }
+  .filtr-range:hover::-webkit-slider-thumb,
+  .filtr-range:active::-webkit-slider-thumb {
+    background: var(--color-accent);
+  }
+  .filtr-range::-moz-range-thumb {
+    width: 9px;
+    height: 9px;
+    border: 0;
+    border-radius: 0;
+    background: var(--color-fg);
+  }
+  .filtr-range:hover::-moz-range-thumb {
+    background: var(--color-accent);
+  }
+
+  .filtr-checker {
+    background-image:
+      linear-gradient(45deg, #161616 25%, transparent 25%),
+      linear-gradient(-45deg, #161616 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #161616 75%),
+      linear-gradient(-45deg, transparent 75%, #161616 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+    background-color: #0b0b0b;
+  }
+}
+
+@layer utilities {
+  .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+  }
+  /* faint dotted backdrop for empty/hero states */
+  .dotgrid {
+    background-image: radial-gradient(var(--color-border-2) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+}
