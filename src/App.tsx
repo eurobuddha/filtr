@@ -4,6 +4,7 @@ import { LeftRail } from './ui/LeftRail'
 import { Preview } from './ui/Preview'
 import { ControlRail } from './ui/ControlRail'
 import { AboutModal } from './ui/AboutModal'
+import { ThemeToggle } from './ui/ThemeToggle'
 
 function Shell() {
   const { loadFile, get, play, pause } = useRenderer()
@@ -41,6 +42,7 @@ function Shell() {
         <div className="flex items-center gap-3">
           <button type="button" onClick={() => setAbout(true)} className="label hover:text-fg">About</button>
           <button type="button" onClick={() => setAbout(true)} className="label hover:text-fg">Changelog</button>
+          <ThemeToggle />
         </div>
         <span className="label">free · webgl2 · runs offline</span>
       </footer>

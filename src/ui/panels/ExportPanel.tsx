@@ -95,7 +95,7 @@ export function ExportPanel() {
       {fmt === 'video' && !vidOk && <p className="label mt-2 normal-case text-muted">Recording unsupported here.</p>}
 
       {busy && (fmt === 'gif' || fmt === 'video') && (
-        <div className="mt-2 h-0.5 w-full bg-surface-3"><div className="h-full bg-accent" style={{ width: `${Math.round(progress * 100)}%` }} /></div>
+        <div className="mt-2 h-0.5 w-full bg-surface-3"><div className="h-full bg-accent-ink" style={{ width: `${Math.round(progress * 100)}%` }} /></div>
       )}
 
       <div className="mt-2 flex gap-1">
@@ -113,5 +113,5 @@ export function ExportPanel() {
 }
 
 function Check2() {
-  return <span className="text-accent">✓</span>
+  return <span className="text-accent-ink">✓</span>
 }

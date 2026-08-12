@@ -19,7 +19,7 @@ export function InputPanel() {
         onDragLeave={() => setDrag(false)}
         onDrop={(e) => { e.preventDefault(); setDrag(false); const f = e.dataTransfer.files?.[0]; if (f) void loadFile(f) }}
         className={`flex cursor-pointer flex-col items-center justify-center gap-1 border border-dashed py-4 text-center transition-colors ${
-          drag ? 'border-accent bg-accent/5' : 'border-border-2 hover:border-faint'
+          drag ? 'border-accent-ink bg-accent-ink/5' : 'border-border-2 hover:border-faint'
         }`}
       >
         <span className="text-[11px] text-fg-dim">Drop file or click to browse</span>
@@ -33,7 +33,7 @@ export function InputPanel() {
         <Camera size={12} /> Webcam
       </button>
       <div className="mt-2 flex items-center gap-1.5">
-        <span className={`h-1.5 w-1.5 ${has ? 'bg-accent' : 'bg-faint'}`} />
+        <span className={`h-1.5 w-1.5 ${has ? 'bg-accent-ink' : 'bg-faint'}`} />
         <span className="label">
           {has ? `${source.width}×${source.height}${source.kind !== 'image' ? ` · ${source.kind}` : ''}` : 'Standby'}
         </span>

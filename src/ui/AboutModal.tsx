@@ -23,11 +23,11 @@ const SHORTCUTS: [string, string][] = [
 export function AboutModal({ onClose }: { onClose: () => void }) {
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--filtr-scrim)] p-4 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        className="grain-overlay relative max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-border bg-surface p-6 shadow-2xl"
+        className="relative max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-border-2 bg-surface p-6"
         onClick={(e) => e.stopPropagation()}
       >
         <button

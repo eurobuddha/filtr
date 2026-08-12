@@ -49,7 +49,7 @@ export function PresetsPanel() {
             key={p.id}
             type="button"
             onClick={() => applyPreset(p.settings)}
-            className="bg-surface px-2 py-1.5 text-left text-[11px] text-fg-dim transition-colors hover:bg-surface-2 hover:text-accent"
+            className="bg-surface px-2 py-1.5 text-left text-[11px] text-fg-dim transition-colors hover:bg-surface-2 hover:text-accent-ink"
           >
             {p.name}
           </button>
@@ -75,7 +75,7 @@ export function PresetsPanel() {
       <div className="mt-2">
         {naming ? (
           <div className="flex gap-1">
-            <input autoFocus value={name} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && save()} placeholder="name" className="min-w-0 flex-1 border border-border bg-surface-2 px-2 py-1 text-[11px] outline-none focus:border-accent" />
+            <input autoFocus value={name} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && save()} placeholder="name" className="min-w-0 flex-1 border border-border bg-surface-2 px-2 py-1 text-[11px] outline-none focus:border-accent-ink" />
             <button type="button" onClick={save} className="flex h-6 w-6 items-center justify-center bg-accent text-black">
               <Check size={12} />
             </button>

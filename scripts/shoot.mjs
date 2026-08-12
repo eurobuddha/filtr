@@ -52,5 +52,17 @@ await page.evaluate(() => window.__filtrStore.getState().setPath('active', 'asci
 await page.waitForTimeout(500)
 await page.screenshot({ path: `${OUT}/_page.png` })
 console.log('  shot _page.png')
+
+// UI chrome in both themes. data-theme is pure DOM (see src/state/theme.ts), so
+// writing it directly bypasses localStorage/matchMedia and is deterministic.
+// The paired canvas shots must be IDENTICAL across themes — that is the proof
+// the theme never reaches the render pipeline.
+for (const theme of ['dark', 'light']) {
+  await page.evaluate((v) => { document.documentElement.dataset.theme = v }, theme)
+  await page.waitForTimeout(300)
+  await page.screenshot({ path: `${OUT}/_page-${theme}.png` })
+  await canvas.screenshot({ path: `${OUT}/_canvas-${theme}.png` })
+  console.log('  shot _page-' + theme + '.png')
+}
 await browser.close()
 console.log('done →', OUT)

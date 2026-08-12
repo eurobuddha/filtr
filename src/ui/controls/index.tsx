@@ -111,7 +111,7 @@ export function Select<T extends string>({
       <select
         value={v}
         onChange={(e) => set(e.target.value as T)}
-        className="min-w-0 flex-1 border border-border bg-surface-2 px-2 py-1 text-[11px] text-fg outline-none focus:border-accent"
+        className="min-w-0 flex-1 border border-border bg-surface-2 px-2 py-1 text-[11px] text-fg outline-none focus:border-accent-ink"
       >
         {options.map((o) => (
           <option key={o.value} value={o.value}>
@@ -150,7 +150,7 @@ export function TextInput({ path, label, placeholder }: { path: string; label: s
         value={v}
         placeholder={placeholder}
         onChange={(e) => set(e.target.value)}
-        className="min-w-0 flex-1 border border-border bg-surface-2 px-2 py-1 text-[11px] text-fg outline-none focus:border-accent"
+        className="min-w-0 flex-1 border border-border bg-surface-2 px-2 py-1 text-[11px] text-fg outline-none focus:border-accent-ink"
       />
     </label>
   )

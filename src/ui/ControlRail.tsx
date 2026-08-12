@@ -9,7 +9,7 @@ export function ControlRail() {
     <div className="flex h-full flex-col overflow-y-auto">
       <div className="flex h-8 shrink-0 items-center justify-between border-b border-border px-3">
         <span className="text-[11px] font-medium uppercase tracking-wider text-fg-dim">Settings</span>
-        <button type="button" onClick={reset} className="label hover:text-accent">reset</button>
+        <button type="button" onClick={reset} className="label hover:text-accent-ink">reset</button>
       </div>
       <EffectSettings />
       <AdjustmentsPanel />

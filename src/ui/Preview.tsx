@@ -73,7 +73,7 @@ export function Preview() {
     <div className="flex h-full min-h-0 flex-1 flex-col bg-bg">
       <div className="flex h-8 shrink-0 items-center justify-between border-b border-border px-3">
         <span className="label flex items-center gap-2">
-          <span className="text-accent">{EFFECT_LABELS[active as EffectId]}</span>
+          <span className="text-accent-ink">{EFFECT_LABELS[active as EffectId]}</span>
           <span className="text-faint">[WEBGL2]</span>
         </span>
         <span className="label">{has ? `${source.width}×${source.height}` : '—'}</span>
@@ -96,8 +96,10 @@ export function Preview() {
           className={`filtr-checker max-h-full max-w-full ${has ? 'block' : 'hidden'}`}
           style={{ objectFit: 'contain', transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`, imageRendering: zoom > 1.5 ? 'pixelated' : 'auto' }}
         />
+        {/* Badge sits over the user's artwork, which can be any colour — the
+            scrim stays dark in both themes, so its ink is pinned to match. */}
         {showOriginal && has && (
-          <div className="pointer-events-none absolute left-8 top-8 bg-black/80 px-1.5 py-0.5 label text-accent-2">original</div>
+          <div className="pointer-events-none absolute left-8 top-8 bg-black/80 px-1.5 py-0.5 label text-[var(--filtr-badge-fg)]">original</div>
         )}
         {!has && !fatal && (
           <div className="text-center">
@@ -111,7 +113,7 @@ export function Preview() {
             <p className="label mt-2 normal-case text-muted">filtr needs WebGL2. Try a recent Chrome, Edge, Firefox or Safari with hardware acceleration enabled.</p>
           </div>
         )}
-        {drag && <div className="pointer-events-none absolute inset-2 border border-dashed border-accent" />}
+        {drag && <div className="pointer-events-none absolute inset-2 border border-dashed border-accent-ink" />}
         {error && !fatal && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 border border-bad/40 bg-bad/10 px-3 py-1 text-[11px] text-bad">{error}</div>
         )}
@@ -119,17 +121,17 @@ export function Preview() {
         {/* zoom controls */}
         {has && (
           <div className="absolute bottom-3 right-3 flex items-center gap-px bg-surface/90 backdrop-blur">
-            <button type="button" onClick={() => setZoom((z) => Math.max(0.2, z / 1.2))} className="flex h-6 w-6 items-center justify-center text-fg-dim hover:text-accent"><Minus size={12} /></button>
+            <button type="button" onClick={() => setZoom((z) => Math.max(0.2, z / 1.2))} className="flex h-6 w-6 items-center justify-center text-fg-dim hover:text-accent-ink"><Minus size={12} /></button>
             <button type="button" onClick={resetView} className="label w-12 text-center tabular-nums hover:text-fg">{Math.round(zoom * 100)}%</button>
-            <button type="button" onClick={() => setZoom((z) => Math.min(8, z * 1.2))} className="flex h-6 w-6 items-center justify-center text-fg-dim hover:text-accent"><Plus size={12} /></button>
-            <button type="button" onClick={fullscreen} className="flex h-6 w-6 items-center justify-center text-fg-dim hover:text-accent" title="Fullscreen"><Maximize2 size={12} /></button>
+            <button type="button" onClick={() => setZoom((z) => Math.min(8, z * 1.2))} className="flex h-6 w-6 items-center justify-center text-fg-dim hover:text-accent-ink"><Plus size={12} /></button>
+            <button type="button" onClick={fullscreen} className="flex h-6 w-6 items-center justify-center text-fg-dim hover:text-accent-ink" title="Fullscreen"><Maximize2 size={12} /></button>
           </div>
         )}
       </div>
 
       {isTimeBased && (
         <div className="flex h-9 shrink-0 items-center gap-3 border-t border-border px-3">
-          <button type="button" onClick={() => (source.isPlaying ? pause() : play())} className="text-fg-dim hover:text-accent">
+          <button type="button" onClick={() => (source.isPlaying ? pause() : play())} className="text-fg-dim hover:text-accent-ink">
             {source.isPlaying ? <Pause size={14} /> : <Play size={14} />}
           </button>
           {isVideo && source.duration > 0 && (
@@ -139,7 +141,7 @@ export function Preview() {
               <span className="label tabular-nums">{fmt(source.duration)}</span>
             </>
           )}
-          {source.kind === 'webcam' && <span className="label text-accent">● live</span>}
+          {source.kind === 'webcam' && <span className="label text-accent-ink">● live</span>}
         </div>
       )}
     </div>
