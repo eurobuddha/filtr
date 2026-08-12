@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Check, Download, Plus, Trash2, Upload } from 'lucide-react'
+import { Check, Download, Link2, Plus, Trash2, Upload } from 'lucide-react'
 import { Panel } from './Panel'
 import { useStore } from '@/state/store'
 import { BUILTIN_PRESETS } from '@/state/presets'
@@ -10,12 +10,14 @@ import {
   loadCustomPresets,
   saveCustomPreset,
 } from '@/state/customPresets'
+import { buildShareUrl } from '@/state/urlState'
 import type { Preset } from '@/state/types'
 
 export function PresetsPanel() {
   const applyPreset = useStore((s) => s.applyPreset)
   const [custom, setCustom] = useState<Preset[]>(() => loadCustomPresets())
   const [naming, setNaming] = useState(false)
+  const [shared, setShared] = useState(false)
   const [name, setName] = useState('')
   const fileRef = useRef<HTMLInputElement>(null)
 
@@ -38,6 +40,19 @@ export function PresetsPanel() {
       setCustom(importPresets(await file.text()))
     } catch {
       /* ignore */
+    }
+  }
+  // Built on demand rather than live-syncing the URL, which would spam history
+  // on every slider drag.
+  async function doShare() {
+    try {
+      const url = await buildShareUrl(useStore.getState().settings)
+      if (navigator.share) await navigator.share({ title: 'filtr', url })
+      else await navigator.clipboard.writeText(url)
+      setShared(true)
+      setTimeout(() => setShared(false), 1600)
+    } catch {
+      /* user dismissed the share sheet, or clipboard denied */
     }
   }
 
@@ -84,6 +99,9 @@ export function PresetsPanel() {
           <div className="flex gap-1">
             <button type="button" onClick={() => setNaming(true)} className="flex flex-1 items-center justify-center gap-1 border border-border bg-surface py-1 text-[11px] text-fg-dim hover:border-border-2 hover:text-fg">
               <Plus size={12} /> Save
+            </button>
+            <button type="button" onClick={doShare} title="Copy link to this look" className="flex h-6 w-6 items-center justify-center border border-border bg-surface text-fg-dim hover:text-fg">
+              {shared ? <Check size={12} className="text-accent-ink" /> : <Link2 size={12} />}
             </button>
             <button type="button" onClick={doExport} title="Export" className="flex h-6 w-6 items-center justify-center border border-border bg-surface text-fg-dim hover:text-fg">
               <Download size={12} />

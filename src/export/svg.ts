@@ -7,6 +7,11 @@ const lum = (r: number, g: number, b: number) => (0.2126 * r + 0.7152 * g + 0.07
 const hex = (r: number, g: number, b: number) =>
   '#' + [r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('')
 const esc = (c: string) => c.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+/** Colours reach here from settings, which a share link can populate. Anything
+ *  that is not a plain hex colour is refused rather than interpolated into an
+ *  attribute — otherwise a crafted link yields a booby-trapped SVG download. */
+const safeColor = (c: string, fallback = '#000000') =>
+  /^#[0-9a-fA-F]{3,8}$/.test(c) ? c : fallback
 
 export function svgSupported(active: string): boolean {
   return active === 'ascii' || active === 'halftone'
@@ -21,7 +26,7 @@ function asciiSvg(renderer: Renderer): string {
   const rows = Math.floor(height / cell)
   const parts = [
     `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">`,
-    `<rect width="${width}" height="${height}" fill="${s.backgroundColor}"/>`,
+    `<rect width="${width}" height="${height}" fill="${safeColor(s.backgroundColor)}"/>`,
     `<g font-family="monospace" font-size="${cell}" text-anchor="middle" dominant-baseline="central">`,
   ]
   for (let cy = 0; cy < rows; cy++)
@@ -49,8 +54,8 @@ function halftoneSvg(renderer: Renderer): string {
   const maxR = 0.5 * cell * 1.45 * s.dotScale
   const parts = [
     `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">`,
-    `<rect width="${width}" height="${height}" fill="${s.bgColor}"/>`,
-    `<g transform="rotate(${s.angle} ${width / 2} ${height / 2})">`,
+    `<rect width="${width}" height="${height}" fill="${safeColor(s.bgColor)}"/>`,
+    `<g transform="rotate(${Number(s.angle) || 0} ${width / 2} ${height / 2})">`,
   ]
   for (let cy = 0; cy < rows; cy++)
     for (let cx = 0; cx < cols; cx++) {

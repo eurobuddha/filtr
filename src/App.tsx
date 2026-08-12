@@ -5,11 +5,44 @@ import { Preview } from './ui/Preview'
 import { ControlRail } from './ui/ControlRail'
 import { AboutModal } from './ui/AboutModal'
 import { ThemeToggle } from './ui/ThemeToggle'
+import { useStore } from './state/store'
+import { clearUrlState, hasDeepLink, readFragmentPatch } from './state/urlState'
+
+/** Bundled sample so a deep-linked visitor lands on a rendered image. */
+async function loadDemoImage(loadFile: (f: File) => Promise<void>) {
+  try {
+    const res = await fetch('/demo.png')
+    if (!res.ok) return
+    const blob = await res.blob()
+    await loadFile(new File([blob], 'demo.png', { type: blob.type || 'image/png' }))
+  } catch {
+    /* non-fatal — the empty state is still a working entry point */
+  }
+}
 
 function Shell() {
   const { loadFile, get, play, pause } = useRenderer()
   const fileRef = useRef<HTMLInputElement>(null)
   const [about, setAbout] = useState(false)
+
+  // #s is async (DecompressionStream), so it lands here rather than in main.tsx.
+  // It takes precedence over the ?p/?fx patch already applied at boot.
+  // A deep-linked visitor also gets the demo image, so they see a working
+  // render instead of the empty drop zone.
+  useEffect(() => {
+    let cancelled = false
+    void (async () => {
+      const deepLinked = hasDeepLink()
+      const patch = await readFragmentPatch()
+      if (cancelled) return
+      if (patch) useStore.getState().applyPreset(patch)
+      if (deepLinked) {
+        clearUrlState()
+        await loadDemoImage(loadFile)
+      }
+    })()
+    return () => { cancelled = true }
+  }, [loadFile])
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
