@@ -63,3 +63,6 @@ serve `dist/`.
 ## License
 
 MIT — original work; not affiliated with any other effects tool.
+
+MIT covers the code. It grants no rights to the **filtr** name or logo — fork it
+freely, but please ship it under your own name.
