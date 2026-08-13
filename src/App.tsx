@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import { RendererProvider, useRenderer } from './ui/RendererProvider'
 import { LeftRail } from './ui/LeftRail'
 import { Preview } from './ui/Preview'
@@ -89,6 +90,10 @@ export default function App() {
   return (
     <RendererProvider>
       <Shell />
+      {/* Page views only — cookieless, first-party, no personal data. Nothing
+          derived from the user's media is ever sent. See the privacy note in
+          AboutModal, which must stay accurate to what this collects. */}
+      <Analytics />
     </RendererProvider>
   )
 }

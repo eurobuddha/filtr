@@ -50,10 +50,20 @@ export function AboutModal({ onClose }: { onClose: () => void }) {
           </div>
         </div>
 
-        <p className="mb-5 text-sm leading-relaxed text-fg-dim">
+        <p className="mb-4 text-sm leading-relaxed text-fg-dim">
           A free, fully client-side studio for turning images, video, GIFs and your
           webcam into ASCII art, dithered prints, halftones and retro screen effects —
-          rendered live with WebGL2. Nothing is uploaded; everything runs in your browser.
+          rendered live with WebGL2.
+        </p>
+
+        {/* Precise on purpose. "Nothing is uploaded" is true of the user's media
+            and stays true — but implying no measurement at all while shipping an
+            analytics beacon would turn an honest claim into a misleading one. */}
+        <p className="mb-5 border-l-2 border-border-2 pl-3 text-sm leading-relaxed text-muted">
+          Your images and video never leave your device — every effect runs on your
+          own GPU. We count anonymous page views to know whether anyone is using
+          filtr: no cookies, no cross-site tracking, no personal data, and nothing
+          derived from your files.
         </p>
 
         <Section title="Keyboard shortcuts">

@@ -2,7 +2,15 @@
 
 **Real-time retro effects studio.** Turn images, video, GIFs and your webcam into
 ASCII art, dithered prints, halftones and CRT/retro screen effects — rendered live
-with WebGL2, entirely in the browser. Nothing is uploaded.
+with WebGL2, entirely in the browser.
+
+## Privacy
+
+Your images and video never leave your device — every effect runs on your own GPU,
+and there is no upload step anywhere in the app. The site counts anonymous page
+views (Vercel Web Analytics: cookieless, no cross-site tracking, no personal data,
+nothing derived from your files). That is the only network request filtr makes
+after the page has loaded.
 
 ## Features
 

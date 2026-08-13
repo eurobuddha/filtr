@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.2.7",
+    "@vercel/analytics": "^2.0.1",
     "gifenc": "^1.0.3",
     "gifuct-js": "^2.1.2",
     "immer": "^11.1.8",
