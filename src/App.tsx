@@ -59,16 +59,22 @@ function Shell() {
     return () => window.removeEventListener('keydown', onKey)
   }, [get, play, pause])
 
+  // Desktop is a fixed three-column instrument. Mobile cannot be: the rails
+  // plus the preview need more than a phone viewport, and forcing them into
+  // h-screen made them collide with the footer. So below lg the page simply
+  // scrolls — preview first (it is what people came for, and its empty state
+  // says what to do), then input/effects, then settings. dvh rather than vh so
+  // the mobile URL bar does not steal height.
   return (
-    <div className="flex h-screen flex-col bg-bg text-fg">
-      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
-        <aside className="h-56 shrink-0 border-b border-border lg:h-auto lg:w-52 lg:border-b-0 lg:border-r">
-          <LeftRail />
-        </aside>
-        <main className="relative flex min-h-[40vh] flex-1 lg:min-h-0">
+    <div className="flex min-h-[100dvh] flex-col bg-bg text-fg lg:h-screen">
+      <div className="flex flex-1 flex-col lg:min-h-0 lg:flex-row">
+        <main className="relative order-1 flex h-[52dvh] shrink-0 border-b border-border lg:order-2 lg:h-auto lg:min-h-0 lg:flex-1 lg:border-b-0">
           <Preview />
         </main>
-        <aside className="h-[45vh] shrink-0 border-t border-border lg:h-auto lg:w-72 lg:border-l lg:border-t-0">
+        <aside className="order-2 shrink-0 border-b border-border lg:order-1 lg:h-auto lg:w-52 lg:overflow-y-auto lg:border-b-0 lg:border-r">
+          <LeftRail />
+        </aside>
+        <aside className="order-3 shrink-0 lg:h-auto lg:w-72 lg:overflow-y-auto lg:border-l">
           <ControlRail />
         </aside>
       </div>
